@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-center mb-3">Опросы и голосования</h1>
+{% if all_questions %}
+{% for question in all_questions %}
+<div class="container col-5 mb-3 mt-4">
+<div class="card-mb-3">
+    <div class="card-body">
+        <p class="lead">{{ question.name }}</p>
+        <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary btn-sm">Голосовать</a>
+        <a href="{% url 'polls:results' question.id %}" class="btn btn-secondary btn-sm">Результаты</a>
+    </div>
+</div>
+</div>
+{% endfor %}
+{% else %}
+<p>Опросов пока нет - создайте новый</p>
+{% endif %}
+{% endblock %}

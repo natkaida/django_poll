@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mb-5 text-center">{{ question.name }}</h1>
+<div class="container col-5">
+<ul class="list-group mb-5">
+    {% for choice in question.choice_set.all %}
+    <li class="list-group-item">
+        {{ choice.name }} <div class="float-end"><span class="badge text-bg-warning">голосов: {{ choice.votes }}
+            </span></div>
+    </li>
+    {% endfor %}
+</ul>
+</div>
+<div class="text-center">
+<a class="btn btn-primary" href="{% url 'polls:index' %}">Вернуться к опросам</a>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-5 mt-5 mb-5">
+  <canvas id="myChart"></canvas>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: {{ labels|safe }},
+      datasets: [{
+        label: 'Количество голосов',
+        data: {{ data|safe }},
+        borderWidth: 1
+      }]
+    },
+
+  });
+</script>
+
+{% endblock %}
